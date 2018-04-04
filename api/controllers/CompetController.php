@@ -3,13 +3,23 @@
  * Created by PhpStorm.
  * User: Administrator
  * Date: 2018/4/4
- * Time: 15:24
+ * Time: 15:22
  */
 
 namespace api\controllers;
-use yii\rest\ActiveController;
-
-class CompetController extends ActiveController
+use yii\rest\Controller;
+use common\models\Compet;
+class CompetController extends Controller
 {
-    public $modelClass='common\models\Compet';
+    public function actionIndex(){
+        $result=Compet::find()->from('compet as a')->leftJoin('x_user as b','a.uid=b.id')
+            ->select('a.*,b.username')->orderBy('a.updatetime desc')->asArray()->all();
+        return $result;
+    }
+    public function actionDetail(){
+        $competid=\Yii::$app->request->get('competid');
+        $result=Compet::find()->from('compet as a')->leftJoin('x_user as b','a.uid=b.id')
+            ->select('a.*,b.username,b.username,b.email,b.uphone')->where(['a.competid'=>$competid])->orderBy('a.updatetime desc')->asArray()->all();
+        return $result;
+    }
 }

@@ -7,9 +7,19 @@
  */
 
 namespace api\controllers;
-use yii\rest\ActiveController;
-
-class TravalController extends ActiveController
+use yii\rest\Controller;
+use common\models\Traval;
+class TravalController extends Controller
 {
-    public $modelClass='common\models\Traval';
+    public function actionIndex(){
+        $result=Traval::find()->from('traval as a')->leftJoin('x_user as b','a.uid=b.id')
+            ->select('a.*,b.username')->orderBy('a.updatetime desc')->asArray()->all();
+        return $result;
+    }
+    public function actionDetail(){
+        $travalid=\Yii::$app->request->get('travalid');
+        $result=Traval::find()->from('traval as a')->leftJoin('x_user as b','a.uid=b.id')
+            ->select('a.*,b.username,b.username,b.email,b.uphone')->where(['a.travalid'=>$travalid])->orderBy('a.updatetime desc')->asArray()->all();
+        return $result;
+    }
 }

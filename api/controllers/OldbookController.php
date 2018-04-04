@@ -7,9 +7,19 @@
  */
 
 namespace api\controllers;
-use yii\rest\ActiveController;
-
-class OldbookController  extends ActiveController
+use yii\rest\Controller;
+use common\models\Oldbook;
+class OldbookController extends Controller
 {
-    public $modelClass='common\models\Oldbook';
+    public function actionIndex(){
+        $result=Oldbook::find()->from('oldbook as a')->leftJoin('x_user as b','a.uid=b.id')
+            ->select('a.*,b.username')->orderBy('a.updatetime desc')->asArray()->all();
+        return $result;
+    }
+    public function actionDetail(){
+        $oldbookid=\Yii::$app->request->get('oldbookid');
+        $result=Oldbook::find()->from('oldbook as a')->leftJoin('x_user as b','a.uid=b.id')
+            ->select('a.*,b.username,b.username,b.email,b.uphone')->where(['a.oldbookid'=>$oldbookid])->orderBy('a.updatetime desc')->asArray()->all();
+        return $result;
+    }
 }

@@ -7,10 +7,19 @@
  */
 
 namespace api\controllers;
-use yii\rest\ActiveController;
-
-
-class RoomController extends ActiveController
+use yii\rest\Controller;
+use common\models\Room;
+class RoomController extends Controller
 {
-    public $modelClass='common\models\Room';
+    public function actionIndex(){
+        $result=Room::find()->from('room as a')->leftJoin('x_user as b','a.uid=b.id')
+            ->select('a.*,b.username')->asArray()->all();
+        return $result;
+    }
+    public function actionDetail(){
+        $roomid=\Yii::$app->request->get('roomid');
+        $result=Room::find()->from('room as a')->leftJoin('x_user as b','a.uid=b.id')
+            ->select('a.*,b.username,b.email,b.uphone')->where(['a.roomid'=>$roomid])->asArray()->all();
+        return $result;
+    }
 }

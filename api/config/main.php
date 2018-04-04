@@ -19,10 +19,7 @@ return [
         'user' => [
             'identityClass' => 'common\models\Xuser',
             'enableAutoLogin' => true,
-        ],
-        'session' => [
-            // this is the name of the session cookie used for login on the backend
-            'name' => 'advanced-backend',
+            'enableSession'=>false,
         ],
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
@@ -36,14 +33,19 @@ return [
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
-        /*
-        'urlManager' => [
-            'enablePrettyUrl' => true,
-            'showScriptName' => false,
-            'rules' => [
-            ],
-        ],
-        */
+//        'urlManager' => [
+//            'enablePrettyUrl' => true,
+//            'showScriptName' => false,
+//            'rules' => [
+//                ['class'=>'yii\rest\UrlRule',
+//                    'controller'=>'traval',
+//                    'extraPatterns'=>[
+//                        'POST test1'=>'test1'
+//                    ]
+//                ]
+//            ],
+//        ],
+
     ],
     'params' => $params,
 ];

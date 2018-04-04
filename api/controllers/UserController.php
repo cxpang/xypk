@@ -8,14 +8,14 @@
 
 namespace api\controllers;
 
-use yii\rest\ActiveController;
+use yii\rest\Controller;
 
-class UserController extends ActiveController
+class UserController extends Controller
 {
     //public $enableCsrfValidation = false;
     public $modelClass='common\models\Xuser';
     public function actionTest1(){
-        $data=array('name'=>'cxpang');
-        echo json_encode($data);
+//        $data=array('name'=>'cxpang');
+        return json_encode($_POST);
     }
 }
