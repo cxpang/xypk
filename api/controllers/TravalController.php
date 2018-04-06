@@ -14,12 +14,22 @@ class TravalController extends Controller
     public function actionIndex(){
         $result=Traval::find()->from('traval as a')->leftJoin('x_user as b','a.uid=b.id')
             ->select('a.*,b.username')->orderBy('a.updatetime desc')->asArray()->all();
-        return $result;
+        $traval=[];
+        foreach ($result as $value){
+            $value['travalimage']="120.24.97.50".$value['travalimage'];
+            $traval[]=$value;
+        }
+        return $traval;
     }
     public function actionDetail(){
         $travalid=\Yii::$app->request->get('travalid');
         $result=Traval::find()->from('traval as a')->leftJoin('x_user as b','a.uid=b.id')
             ->select('a.*,b.username,b.username,b.email,b.uphone')->where(['a.travalid'=>$travalid])->orderBy('a.updatetime desc')->asArray()->all();
-        return $result;
+        $traval=[];
+        foreach ($result as $value){
+            $value['travalimage']="120.24.97.50".$value['travalimage'];
+            $traval[]=$value;
+        }
+        return $traval;
     }
 }

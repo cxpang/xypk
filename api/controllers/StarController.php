@@ -14,12 +14,23 @@ class StarController extends Controller
     public function actionIndex(){
         $result=Star::find()->from('star as a')->leftJoin('x_user as b','a.uid=b.id')
             ->select('a.*,b.username')->orderBy('a.updatetime desc')->asArray()->all();
-        return $result;
+        $star=[];
+        foreach ($result as $value){
+            $value['starimage']="120.24.97.50".$value['starimage'];
+            $star[]=$value;
+        }
+        return $star;
     }
     public function actionDetail(){
         $starid=\Yii::$app->request->get('starid');
         $result=Star::find()->from('star as a')->leftJoin('x_user as b','a.uid=b.id')
             ->select('a.*,b.username,b.username,b.email,b.uphone')->where(['a.starid'=>$starid])->orderBy('a.updatetime desc')->asArray()->all();
-        return $result;
+        $star=[];
+        foreach ($result as $value){
+            $value['starimage']="120.24.97.50".$value['starimage'];
+            $star[]=$value;
+        }
+        return $star;
+
     }
 }

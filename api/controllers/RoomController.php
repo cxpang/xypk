@@ -25,6 +25,11 @@ class RoomController extends Controller
         $roomid=\Yii::$app->request->get('roomid');
         $result=Room::find()->from('room as a')->leftJoin('x_user as b','a.uid=b.id')
             ->select('a.*,b.username,b.email,b.uphone')->where(['a.roomid'=>$roomid])->asArray()->all();
-        return $result;
+        $roomdetail=[];
+        foreach ($result as $value){
+            $value['roomimage']="120.24.97.50".$value['roomimage'];
+            $roomdetail[]=$value;
+        }
+        return $roomdetail;
     }
 }
