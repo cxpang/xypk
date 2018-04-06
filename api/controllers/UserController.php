@@ -21,7 +21,11 @@ class UserController extends Controller
        $user=XUser::find()->where(['username'=>$username])->asArray()->one();
        if($user) {
            if (Yii::$app->security->validatePassword($password, $user['password'])) {
-               return $user;
+               return array(
+                   'code'=>0,
+                   'message'=>'登录成功',
+                   'data'=>$user
+               );
            } else {
                return array(
                    'code' => -1,
@@ -54,7 +58,11 @@ class UserController extends Controller
         $user->setPassword($password);
         $user->generateAuthKey();
         if($user->save()){
-            return $user;
+            return array(
+                'code'=>0,
+                'message'=>'登录成功',
+                'data'=>$user
+            );
         }
         else{
             return array(
