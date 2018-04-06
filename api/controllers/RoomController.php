@@ -14,7 +14,12 @@ class RoomController extends Controller
     public function actionIndex(){
         $result=Room::find()->from('room as a')->leftJoin('x_user as b','a.uid=b.id')
             ->select('a.*,b.username')->asArray()->all();
-        return $result;
+        $room=[];
+        foreach ($result as $value){
+            $value['roomimage']="120.24.97.50".$value['roomimage'];
+            $room[]=$value;
+        }
+        return $room;
     }
     public function actionDetail(){
         $roomid=\Yii::$app->request->get('roomid');
