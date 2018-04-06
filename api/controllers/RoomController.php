@@ -9,6 +9,7 @@
 namespace api\controllers;
 use yii\rest\Controller;
 use common\models\Room;
+use common\models\Roomcontent;
 class RoomController extends Controller
 {
     public function actionIndex(){
@@ -31,5 +32,18 @@ class RoomController extends Controller
             $roomdetail[]=$value;
         }
         return $roomdetail;
+    }
+    public function actionDetailcomment(){
+        $roomid=\Yii::$app->request->get('roomid');
+        $roomcontent=New Roomcontent();
+        $result= $roomcontent->find()->leftJoin('x_user','roomcontent.uid=x_user.id')
+            ->select('roomcontent.*,x_user.username,x_user.upicture,x_user.expe,x_user.email,x_user.uphone')
+            ->where(['roomcontent.roomid'=>$roomid])->asArray()->all();
+        $commentdetail=[];
+        foreach ($result as $value){
+            $value['upicture']="120.24.97.50".$value['upicture'];
+            $commentdetail[]=$value;
+        }
+        return $commentdetail;
     }
 }

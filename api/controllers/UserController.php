@@ -20,6 +20,7 @@ class UserController extends Controller
        $password=$params['password'];
        $user=XUser::find()->where(['username'=>$username])->asArray()->one();
        if($user) {
+           $user['upicture']="http://120.24.97.50".$user['upicture'];
            if (Yii::$app->security->validatePassword($password, $user['password'])) {
                return array(
                    'code'=>0,
