@@ -41,6 +41,13 @@ class UserController extends Controller
            );
        }
    }
+   public function actionGetuserinfo($username){
+       $user=XUser::find()->where(['username'=>$username])->asArray()->one();
+       if($user){
+           $user['upicture']="http://120.24.97.50".$user['upicture'];
+           return $user;
+       }
+   }
     public function actionRegist(){
 
         $params=Yii::$app->request->post();
